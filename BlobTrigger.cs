@@ -12,7 +12,7 @@ namespace YOURCOMPANY.Function
     public static class BlobTrigger
     {
         [FunctionName("BlobTrigger")]
-        public static void Run([BlobTrigger("pictures/{name}", Connection = "YOURSTORAGE_CONNECTION")] Stream myBlob, string name,
+        public static void Run([BlobTrigger("pictures/{name}", Connection = "STORAGE_CONNECTIONSTRING")] Stream myBlob, string name,
         [CosmosDB(
         databaseName: "custom_vision",
         collectionName:"prediction_result",
