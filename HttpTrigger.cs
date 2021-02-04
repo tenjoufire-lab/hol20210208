@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using Microsoft.Azure.Cosmos;
 using System.Collections.Generic;
 
-namespace katsujim.Function
+namespace YOURCOMPANY.Function
 {
     public static class HttpTrigger
     {
