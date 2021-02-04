@@ -14,7 +14,7 @@ namespace YOURCOMPANY.Function
         [FunctionName("TimerTrigger")]
         public static void Run([TimerTrigger("0 */30 * * * *")]TimerInfo myTimer, ILogger log)
         {
-            string ConnectionString = Environment.GetEnvironmentVariable("STORAGE_CONNECTIONSTRING");
+            string ConnectionString = Environment.GetEnvironmentVariable("YOURSTORAGENAME_STORAGE");
             BlobServiceClient blobServiceClient = new BlobServiceClient(ConnectionString);
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("pictures");
 
