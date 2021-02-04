@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta http-equiv="content-type" charset="utf-8">
+    <title>Line Chart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+        integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <form>
+        <label for="date">日付</label>
+        <input type="date" id="date" name="date">
+        <button type="button" onclick="onButtonClick()">更新</button>
+    </form>
+    <div style="width:75%;">
+        <canvas id="myChart"></canvas>
+    </div>
+
+
+    <script>
+        var url = 'YOUR_FUNCTION_URL?date=';
+
+        var config = {
+            type: 'line',
+            data: {
+                labels: ['9AM', '10AM', '11AM', 'NOON', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM'],
+                datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: '#ff0000',
+                    borderColor: '#ff0000',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 3],
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Chart.js Line Chart'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '時間'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '人数'
+                        }
+                    }]
+                }
+            }
+        };
+
+
+        var ctx = document.getElementById("myChart");
+        window.myLine = new Chart(ctx, config);
+
+        function onButtonClick() {
+            var date = document.forms[0].elements[0].value.replace(/-/g,'/');
+            console.log(date);
+            var request = new XMLHttpRequest();
+            request.open('GET', url + date);
+            request.onreadystatechange = function () {
+                if (request.readyState != 4) {
+                    // リクエスト中
+                } else if (request.status != 200) {
+                    window.alert('データ取得に失敗しました');
+                } else {
+                    // 取得成功
+                    //window.alert(request.responseText);
+                    console.log("meu");
+                    var json_string = request.responseText;
+                    var jsonData = JSON.parse(json_string);
+                    var updatedata = [];
+                    var updateLabels = [];
+                    jsonData.forEach(element => {
+                        updatedata.push(element.PeopleCount);
+                        updateLabels.push(element.Time);
+                    });
+                    config.data.datasets.splice(0, 1);
+                    window.myLine.update();
+                    var newDataset = {
+                        label: date + ' の人数推移',
+                        data: updatedata,
+                        backgroundColor: '#ff0000',
+                        borderColor: '#ff0000',
+                        fill: false
+                    };
+                    config.data.datasets.push(newDataset);
+                    config.data.labels = updateLabels;
+                    window.myLine.update();
+                }
+            };
+            request.send(null);
+        }
+
+    </script>
+</body>
+
+</html>
