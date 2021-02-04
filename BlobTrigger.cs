@@ -11,7 +11,7 @@ namespace YOURCOMPANY.Function
 {
     public static class BlobTrigger
     {
-        [FunctionName("CountPeople")]
+        [FunctionName("BlobTrigger")]
         public static void Run([BlobTrigger("pictures/{name}", Connection = "YOURSTORAGE_CONNECTION")] Stream myBlob, string name,
         [CosmosDB(
         databaseName: "custom_vision",
