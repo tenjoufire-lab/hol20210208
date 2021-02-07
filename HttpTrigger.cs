@@ -29,7 +29,7 @@ namespace YOURCOMPANY.Function
             CosmosClient client = new CosmosClient(Environment.GetEnvironmentVariable("CosmosDBConnection"));
             Container container = client.GetDatabase("custom_vision").GetContainer("prediction_result");
 
-            var quetyText = $"SELECT * FROM c WHERE c.Date = '{queryDate}' ORDER BY c.Time ASC";
+            var quetyText = $"SELECT * FROM c WHERE c.Date = '{queryDate}' ORDER BY c.Timestring ASC";
             FeedIterator<NumOfPeople> queryResultSetIterator = container.GetItemQueryIterator<NumOfPeople>(quetyText);
             List<NumOfPeople> people = new List<NumOfPeople>();
 
