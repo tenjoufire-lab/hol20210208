@@ -69,9 +69,9 @@ namespace YOURCOMPANY.Function
             document = new
             {
                 id = Guid.NewGuid(),
-                Timestring = dt.ToString("u", culture),
-                Date = dt.ToString("d", culture),
-                Time = dt.ToString("t", culture),
+                Timestring = dt.AddHours(9.0).ToString("u", culture),
+                Date = dt.AddHours(9.0).ToString("d", culture),
+                Time = dt.AddHours(9.0).ToString("t", culture),
                 PeopleCount = peopleCount,
                 Place = "TEST"
             };
